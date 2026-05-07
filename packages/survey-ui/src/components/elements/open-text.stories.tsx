@@ -207,6 +207,8 @@ export const Disabled: Story = {
 
 export const DisabledWithValue: Story = {
   args: {
+    elementId: "open-text-disabled-value",
+    inputId: "open-text-disabled-value-input",
     headline: "Submission ID",
     value: "SUB-2024-001",
     disabled: true,
