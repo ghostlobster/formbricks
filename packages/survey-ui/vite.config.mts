@@ -1,4 +1,5 @@
 /// <reference types="vitest" />
+import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -19,6 +20,11 @@ import { rewriteNodeNextDtsSpecifiers } from "../vite-plugins/node-next-dts";
  * Related issue: https://github.com/TanStack/query/issues/5175
  */
 export default defineConfig({
+  resolve: {
+    alias: {
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    },
+  },
   build: {
     // Keep dist when running watch so surveys (and others) can resolve types during parallel go
     emptyOutDir: false,
@@ -58,16 +64,17 @@ export default defineConfig({
     tailwindcss(),
   ],
   test: {
-    environment: "node",
+    environment: "happy-dom",
     globals: true,
-    include: ["src/**/*.test.ts"],
+    include: ["src/**/*.test.ts", "src/**/*.a11y.test.tsx"],
     exclude: ["dist/**", "node_modules/**"],
+    setupFiles: ["./vitestSetup.ts"],
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html", "lcov"],
       reportsDirectory: "./coverage",
       include: ["src/lib/**/*.ts"],
-      exclude: ["**/*.test.ts", "**/*.stories.tsx"],
+      exclude: ["**/*.test.ts", "**/*.a11y.test.tsx", "**/*.stories.tsx"],
     },
   },
 });

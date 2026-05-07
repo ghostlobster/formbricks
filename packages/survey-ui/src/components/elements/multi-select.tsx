@@ -183,9 +183,7 @@ function DropdownVariant({
           <Button
             variant="outline"
             disabled={disabled}
-            className="rounded-input min-h-input bg-input-bg border-input-border text-input-text py-input-y px-input-x w-full justify-between"
-            aria-invalid={Boolean(errorMessage)}
-            aria-label={headline}>
+            className="rounded-input min-h-input bg-input-bg border-input-border text-input-text py-input-y px-input-x w-full justify-between">
             <span className="font-input font-input-weight text-input-text truncate">{displayText}</span>
             <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
           </Button>
@@ -202,6 +200,7 @@ function DropdownVariant({
               setSearchQuery={setSearchQuery}
               searchInputRef={searchInputRef}
               placeholder={searchPlaceholder}
+              searchAriaLabel={`Search options for: ${headline}`}
               dir={dir}
             />
           ) : null}
@@ -279,6 +278,7 @@ function DropdownVariant({
           placeholder={otherOptionPlaceholder}
           disabled={disabled}
           required
+          aria-label={otherOptionLabel}
           aria-invalid={Boolean(errorMessage)}
           dir={dir}
           className="mt-2 w-full"
@@ -400,6 +400,7 @@ function ListVariant({
                   placeholder={otherOptionPlaceholder}
                   disabled={disabled}
                   required
+                  aria-label={otherOptionLabel}
                   aria-invalid={Boolean(errorMessage)}
                   dir={dir}
                   className="mt-2 w-full"

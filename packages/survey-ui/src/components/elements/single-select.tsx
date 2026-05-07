@@ -255,9 +255,7 @@ function SingleSelect({
                 <Button
                   variant="outline"
                   disabled={disabled}
-                  className="rounded-input min-h-input bg-input-bg border-input-border text-input-text py-input-y px-input-x w-full justify-between"
-                  aria-invalid={Boolean(errorMessage)}
-                  aria-label={headline}>
+                  className="rounded-input min-h-input bg-input-bg border-input-border text-input-text py-input-y px-input-x w-full justify-between">
                   <span className="font-input font-input-weight text-input-text truncate">{displayText}</span>
                   <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
@@ -274,6 +272,7 @@ function SingleSelect({
                     setSearchQuery={setSearchQuery}
                     searchInputRef={searchInputRef}
                     placeholder={searchPlaceholder}
+                    searchAriaLabel={`Search options for: ${headline}`}
                     dir={dir}
                   />
                 ) : null}
@@ -339,6 +338,7 @@ function SingleSelect({
                 placeholder={otherOptionPlaceholder}
                 disabled={disabled}
                 required
+                aria-label={otherOptionLabel}
                 aria-invalid={Boolean(errorMessage)}
                 dir={dir}
                 className="mt-2 w-full"
@@ -368,12 +368,7 @@ function SingleSelect({
                       htmlFor={optionId}
                       className={cn(getOptionContainerClassName(isSelected), isSelected && "z-10")}>
                       <span className="flex items-center">
-                        <RadioGroupItem
-                          value={option.id}
-                          id={optionId}
-                          disabled={disabled}
-                          aria-required={required}
-                        />
+                        <RadioGroupItem value={option.id} id={optionId} disabled={disabled} />
                         <span className={cn("mx-3 grow", optionLabelClassName)}>{option.label}</span>
                       </span>
                     </label>
@@ -389,7 +384,6 @@ function SingleSelect({
                       value={otherOptionId}
                       id={`${inputId}-${otherOptionId}`}
                       disabled={disabled}
-                      aria-required={required}
                     />
                     <span className={cn("mr-3 ml-3 grow", optionLabelClassName)}>{otherOptionLabel}</span>
                   </span>
@@ -402,6 +396,7 @@ function SingleSelect({
                       placeholder={otherOptionPlaceholder}
                       disabled={disabled}
                       required
+                      aria-label={otherOptionLabel}
                       aria-invalid={Boolean(errorMessage)}
                       dir={dir}
                       className="mt-2 w-full"
@@ -422,12 +417,7 @@ function SingleSelect({
                       dir={dir}
                       className={cn(getOptionContainerClassName(isSelected), isSelected && "z-10")}>
                       <span className="flex items-center">
-                        <RadioGroupItem
-                          value={option.id}
-                          id={optionId}
-                          disabled={disabled}
-                          aria-required={required}
-                        />
+                        <RadioGroupItem value={option.id} id={optionId} disabled={disabled} />
                         <span className={cn("mx-3 grow", optionLabelClassName)}>{option.label}</span>
                       </span>
                     </label>

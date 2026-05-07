@@ -11,7 +11,12 @@
     },
     "resolveJsonModule": true
   },
-  "exclude": ["src/**/*.stories.tsx", "src/**/story-helpers.tsx", "src/**/*.test.ts"],
+  "exclude": [
+    "src/**/*.stories.tsx",
+    "src/**/story-helpers.tsx",
+    "src/**/*.test.ts",
+    "src/**/*.a11y.test.tsx"
+  ],
   "extends": "@formbricks/config-typescript/react-library.json",
   "include": ["src"]
 }

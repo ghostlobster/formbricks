@@ -3,6 +3,7 @@ import surveyUiCss from "@formbricks/survey-ui/styles?inline";
 import { type TProjectStyling } from "@formbricks/types/project";
 import { type TSurveyStyling } from "@formbricks/types/surveys/types";
 import { isLight, mixColor } from "@/lib/color";
+import { getContrastRatio } from "@/lib/contrast";
 import global from "@/styles/global.css?inline";
 import preflight from "@/styles/preflight.css?inline";
 import editorCss from "../../../../apps/web/modules/ui/components/editor/styles-editor-frontend.css?inline";
@@ -201,6 +202,16 @@ export const addCustomThemeToDom = ({ styling }: { styling: TProjectStyling | TS
   }
   appendCssVariable("button-bg-color", buttonBg);
   appendCssVariable("button-text-color", buttonText);
+  if (process.env.NODE_ENV !== "production" && buttonBg && buttonText) {
+    const ratio = getContrastRatio(buttonText, buttonBg);
+    if (ratio !== null && ratio < 4.5) {
+      // eslint-disable-next-line no-console
+      console.warn(
+        `[Formbricks a11y] Button color contrast ratio ${ratio.toFixed(2)}:1 does not meet WCAG AA (minimum 4.5:1 for normal text). ` +
+          `Foreground: ${buttonText}, Background: ${buttonBg}`
+      );
+    }
+  }
   if (styling.buttonBorderRadius !== undefined)
     appendCssVariable("button-border-radius", formatDimension(styling.buttonBorderRadius));
   if (styling.buttonHeight !== undefined)

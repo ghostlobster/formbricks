@@ -272,6 +272,7 @@ function Rating({
             handleSelect(number);
           }}
           disabled={disabled}
+          tabIndex={-1}
           className="sr-only"
           aria-label={`Rate ${String(number)} out of ${String(range)}`}
         />
@@ -322,6 +323,7 @@ function Rating({
             handleSelect(number);
           }}
           disabled={disabled}
+          tabIndex={-1}
           className="sr-only"
           aria-label={`Rate ${String(number)} out of ${String(range)} stars`}
         />
@@ -380,6 +382,7 @@ function Rating({
             handleSelect(number);
           }}
           disabled={disabled}
+          tabIndex={-1}
           className="sr-only"
           aria-label={`Rate ${String(number)} out of ${String(range)}`}
         />

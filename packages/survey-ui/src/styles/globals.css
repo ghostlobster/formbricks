@@ -97,8 +97,8 @@
   --fb-element-upper-label-font-family: inherit;
   --fb-element-upper-label-font-weight: 400;
   --fb-element-upper-label-font-size: 12px;
-  --fb-element-upper-label-color: #414b5a;
-  --fb-element-upper-label-opacity: 0.6;
+  --fb-element-upper-label-color: #5c6b7f;
+  --fb-element-upper-label-opacity: 1;
 
   /* ── Labels ────────────────────────────────────────────────────────── */
   --fb-label-font-family: inherit;
@@ -127,8 +127,8 @@
   --fb-input-font-size: 14px;
   --fb-input-font-weight: 400;
   --fb-input-color: #414b5a;
-  --fb-input-placeholder-color: var(--fb-input-text-color, var(--fb-input-color));
-  --fb-input-placeholder-opacity: 0.5;
+  --fb-input-placeholder-color: #606e7e;
+  --fb-input-placeholder-opacity: 1;
   --fb-input-width: 100%;
   --fb-input-height: 20px;
   --fb-input-padding-x: 8px;

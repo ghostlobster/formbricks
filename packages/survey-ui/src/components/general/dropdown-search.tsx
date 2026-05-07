@@ -99,6 +99,8 @@ interface DropdownSearchInputProps {
   setSearchQuery: (query: string) => void;
   searchInputRef: React.RefObject<HTMLInputElement | null>;
   placeholder: string;
+  /** Descriptive label for the search input; should include question context (e.g. "Search options for: Country"). */
+  searchAriaLabel?: string;
   dir?: string;
 }
 
@@ -110,12 +112,13 @@ export function DropdownSearchInput({
   setSearchQuery,
   searchInputRef,
   placeholder,
+  searchAriaLabel,
   dir,
 }: Readonly<DropdownSearchInputProps>): React.JSX.Element {
   return (
     <div className="border-option-border border-b pb-0.5" role="search">
       <div className="relative flex items-center">
-        <Search className="text-input-text pointer-events-none absolute left-1.5 h-4 w-4 shrink-0" />
+        <Search className="text-input-text pointer-events-none absolute left-1.5 h-4 w-4 shrink-0" aria-hidden="true" />
         <input
           ref={searchInputRef}
           type="text"
@@ -136,7 +139,7 @@ export function DropdownSearchInput({
             }
           }}
           className="bg-input-bg text-input-text placeholder:text-input-placeholder font-input font-input-weight h-9 w-full rounded-sm pr-3 pl-8 text-sm outline-none"
-          aria-label={placeholder}
+          aria-label={searchAriaLabel ?? placeholder}
           autoComplete="off"
         />
       </div>
