@@ -156,8 +156,6 @@ function Matrix({
                                 if (isChecked) handleRowChange(row.id, column.id);
                               }}
                               disabled={disabled}
-                              aria-required={required}
-                              aria-invalid={Boolean(errorMessage)}
                               aria-label={`${row.label}, ${column.label}`}
                               className="peer sr-only"
                             />
