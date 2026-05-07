@@ -194,20 +194,20 @@ function UploadArea({
           id={`${inputId}-label`}>
           {placeholderText}
         </span>
-        <input
-          ref={fileInputRef}
-          type="file"
-          id={inputId}
-          className="sr-only"
-          multiple={allowMultiple}
-          accept={acceptAttribute}
-          onChange={onFileChange}
-          disabled={disabled}
-          dir={dir}
-          aria-label="File upload"
-          aria-describedby={`${inputId}-label`}
-        />
       </button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        id={inputId}
+        className="sr-only"
+        multiple={allowMultiple}
+        accept={acceptAttribute}
+        onChange={onFileChange}
+        disabled={disabled}
+        dir={dir}
+        aria-label="File upload"
+        aria-describedby={`${inputId}-label`}
+      />
     </label>
   );
 }
