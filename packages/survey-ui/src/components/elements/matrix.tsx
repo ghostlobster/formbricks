@@ -105,7 +105,7 @@ function Matrix({
               <tr>
                 <th className="p-2 text-start" />
                 {columns.map((column) => (
-                  <th key={column.id} className="p-2 text-center font-normal">
+                  <th key={column.id} id={`${inputId}-col-${column.id}`} className="p-2 text-center font-normal">
                     <Label className="justify-center">{column.label}</Label>
                   </th>
                 ))}
@@ -132,7 +132,7 @@ function Matrix({
                     aria-invalid={Boolean(errorMessage)}>
                     <tr className={cn("relative", baseBgColor)} dir={dir}>
                       {/* Row label */}
-                      <th scope="row" className={cn("rounded-s-input p-2 align-middle")}>
+                      <th scope="row" id={`${inputId}-row-${row.id}`} className={cn("rounded-s-input p-2 align-middle")}>
                         <div className="flex flex-col gap-0 leading-none">
                           <Label>{row.label}</Label>
                         </div>
@@ -145,13 +145,14 @@ function Matrix({
                         return (
                           <td
                             key={column.id}
+                            headers={`${inputId}-col-${column.id} ${inputId}-row-${row.id}`}
                             className={cn("p-2 text-center align-middle", isLastColumn && "rounded-e-input")}>
                             <Label htmlFor={cellId} className="flex cursor-pointer justify-center">
                               <RadioGroupItem
                                 value={column.id}
                                 id={cellId}
                                 disabled={disabled}
-                                aria-label={`${row.label}-${column.label}`}
+                                aria-label={`${row.label}, ${column.label}`}
                               />
                             </Label>
                           </td>

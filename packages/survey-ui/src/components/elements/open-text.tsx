@@ -57,11 +57,17 @@ function OpenText({
     onChange(newValue);
   };
 
+  const charCounterId = charLimit?.max !== undefined ? `${inputId}-counter` : undefined;
+
   const renderCharLimit = (): React.JSX.Element | null => {
     if (charLimit?.max === undefined) return null;
     const isOverLimit = currentLength >= charLimit.max;
     return (
-      <span className={cn("text-xs", isOverLimit ? "font-semibold text-red-500" : "text-brand")}>
+      <span
+        id={charCounterId}
+        aria-live="polite"
+        aria-atomic="true"
+        className={cn("text-xs", isOverLimit ? "font-semibold text-red-500" : "text-brand")}>
         {currentLength}/{charLimit.max}
       </span>
     );
@@ -93,7 +99,7 @@ function OpenText({
               value={value}
               onChange={handleChange}
               aria-required={required}
-              aria-describedby={descriptionId}
+              aria-describedby={[descriptionId, charCounterId].filter(Boolean).join(" ") || undefined}
               dir={dir}
               rows={rows}
               disabled={disabled}
@@ -109,7 +115,7 @@ function OpenText({
               value={value}
               onChange={handleChange}
               aria-required={required}
-              aria-describedby={descriptionId}
+              aria-describedby={[descriptionId, charCounterId].filter(Boolean).join(" ") || undefined}
               dir={dir}
               disabled={disabled}
               errorMessage={errorMessage}

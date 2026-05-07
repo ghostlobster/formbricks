@@ -8,21 +8,26 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "test-storybook": "test-storybook",
+    "test-storybook:ci": "test-storybook --url http://localhost:6006",
     "clean": "rimraf .turbo node_modules dist storybook-static"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.10.1",
     "@chromatic-com/storybook": "5.0.2",
     "@storybook/addon-a11y": "10.3.5",
     "@storybook/addon-docs": "10.3.5",
     "@storybook/addon-links": "10.3.5",
     "@storybook/addon-onboarding": "10.3.5",
     "@storybook/react-vite": "10.3.5",
+    "@storybook/test-runner": "0.22.0",
     "@tailwindcss/vite": "4.2.4",
     "@typescript-eslint/eslint-plugin": "8.57.2",
     "@typescript-eslint/parser": "8.57.2",
     "@vitejs/plugin-react": "5.1.4",
     "eslint-plugin-react-refresh": "0.4.26",
     "eslint-plugin-storybook": "10.3.5",
+    "http-server": "14.1.1",
     "storybook": "10.3.5",
     "vite": "7.3.2"
   }

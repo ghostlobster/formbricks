@@ -9,24 +9,38 @@ interface ElementErrorProps {
   dir?: "ltr" | "rtl" | "auto";
 }
 
-function ElementError({ errorMessage, dir = "auto" }: Readonly<ElementErrorProps>): React.JSX.Element | null {
-  if (!errorMessage) {
-    return null;
-  }
-
+function ElementError({ errorMessage, dir = "auto" }: Readonly<ElementErrorProps>): React.JSX.Element {
   return (
     <>
-      {/* Error indicator bar */}
+      {/* Error indicator bar - decorative, hidden from screen readers */}
+      {errorMessage && (
+        <div
+          aria-hidden="true"
+          className={cn(
+            "bg-destructive absolute top-0 bottom-0 w-[4px]",
+            dir === "rtl" ? "right-[-10px]" : "left-[-10px]"
+          )}
+        />
+      )}
+      {/*
+       * Live region always rendered so the browser registers it before content arrives.
+       * JAWS (both Browse and Forms mode) requires the region to exist in DOM before
+       * content changes to announce the error reliably.
+       */}
       <div
-        className={cn(
-          "bg-destructive absolute top-0 bottom-0 w-[4px]",
-          dir === "rtl" ? "right-[-10px]" : "left-[-10px]"
-        )}
-      />
-      {/* Error message - shown at top */}
-      <div className="text-destructive mb-2 flex items-center gap-1 text-sm" dir={dir}>
-        <AlertCircle className="size-4" />
-        <span>{errorMessage}</span>
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        dir={dir}
+        className={
+          errorMessage ? "text-destructive mb-2 flex items-center gap-1 text-sm" : "sr-only"
+        }>
+        {errorMessage ? (
+          <>
+            <AlertCircle className="size-4" aria-hidden="true" />
+            <span>{errorMessage}</span>
+          </>
+        ) : null}
       </div>
     </>
   );

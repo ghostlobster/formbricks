@@ -60,14 +60,16 @@ export default defineConfig({
   test: {
     environment: "node",
     globals: true,
-    include: ["src/**/*.test.ts"],
+    include: ["src/**/*.test.ts", "src/**/*.a11y.test.tsx"],
     exclude: ["dist/**", "node_modules/**"],
+    environmentMatchGlobs: [["src/**/*.a11y.test.tsx", "happy-dom"]],
+    setupFiles: ["./vitestSetup.ts"],
     coverage: {
       provider: "v8",
       reporter: ["text", "json", "html", "lcov"],
       reportsDirectory: "./coverage",
       include: ["src/lib/**/*.ts"],
-      exclude: ["**/*.test.ts", "**/*.stories.tsx"],
+      exclude: ["**/*.test.ts", "**/*.a11y.test.tsx", "**/*.stories.tsx"],
     },
   },
 });

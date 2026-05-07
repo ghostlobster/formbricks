@@ -38,9 +38,14 @@ jobs:
     uses: ./.github/workflows/e2e.yml
     secrets: inherit
 
+  storybook-a11y:
+    name: Storybook A11y (WCAG 2.1 AA)
+    uses: ./.github/workflows/a11y-storybook.yml
+    secrets: inherit
+
   required:
     name: PR Check Summary
-    needs: [lint, test, build, e2e-test]
+    needs: [lint, test, build, e2e-test, storybook-a11y]
     if: always()
     runs-on: ubuntu-latest
     permissions:

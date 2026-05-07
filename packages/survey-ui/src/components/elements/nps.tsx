@@ -147,6 +147,7 @@ function NPS({
             handleSelect(number);
           }}
           disabled={disabled}
+          tabIndex={-1}
           className="sr-only"
           aria-label={`Rate ${String(number)} out of 10`}
         />

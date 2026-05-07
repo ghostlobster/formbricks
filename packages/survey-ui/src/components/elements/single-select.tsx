@@ -274,6 +274,7 @@ function SingleSelect({
                     setSearchQuery={setSearchQuery}
                     searchInputRef={searchInputRef}
                     placeholder={searchPlaceholder}
+                    searchAriaLabel={`Search options for: ${headline}`}
                     dir={dir}
                   />
                 ) : null}

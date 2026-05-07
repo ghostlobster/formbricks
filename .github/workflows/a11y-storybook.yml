@@ -1,0 +1,56 @@
+name: Storybook A11y Tests
+on:
+  workflow_call:
+permissions:
+  contents: read
+
+jobs:
+  storybook-a11y:
+    name: Storybook Accessibility (WCAG 2.1 AA)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@0634a2670c59f64b4a01f0f96f84700a4088b9f0 # v2.12.0
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./.github/actions/dangerous-git-checkout
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 20.x
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile --config.platform=linux --config.architecture=x64
+
+      - name: Build survey-ui (required by Storybook)
+        run: pnpm --filter @formbricks/survey-ui build
+
+      - name: Build Storybook static output
+        run: pnpm --filter storybook build-storybook
+
+      - name: Install Playwright browsers (Chromium only)
+        run: pnpm exec playwright install chromium --with-deps
+
+      - name: Run Storybook A11y tests
+        run: |
+          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
+            "npx http-server apps/storybook/storybook-static --port 6006 --silent" \
+            "npx wait-on tcp:6006 && pnpm --filter storybook test-storybook:ci"
+
+      - name: Upload A11y report on failure
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        if: failure()
+        with:
+          name: storybook-a11y-report
+          path: apps/storybook/storybook-a11y-report/
+          retention-days: 7
