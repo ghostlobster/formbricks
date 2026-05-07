@@ -28,7 +28,10 @@ const meta: Meta<StoryProps> = {
   parameters: {
     layout: "centered",
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "a11y-verified"],
+  args: {
+    "aria-label": "Text input",
+  },
   argTypes: {
     type: {
       control: { type: "select" },

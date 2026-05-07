@@ -22,7 +22,7 @@ type StoryProps = ButtonProps & StylingOptions;
 const meta: Meta<StoryProps> = {
   title: "UI-package/General/Button",
   component: Button,
-  tags: ["autodocs"],
+  tags: ["autodocs", "a11y-verified"],
   parameters: {
     layout: "centered",
   },

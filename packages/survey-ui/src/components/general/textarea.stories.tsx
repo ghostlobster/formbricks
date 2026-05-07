@@ -14,7 +14,7 @@ const meta: Meta<typeof Textarea> = {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "a11y-verified"],
   argTypes: {
     placeholder: {
       control: { type: "text" },
@@ -48,6 +48,7 @@ const meta: Meta<typeof Textarea> = {
   },
   args: {
     placeholder: "Enter your text...",
+    "aria-label": "Text area",
   },
 };
 

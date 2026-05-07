@@ -14,7 +14,7 @@ const meta: Meta<typeof RadioGroup> = {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "a11y-verified"],
   argTypes: {
     defaultValue: {
       control: { type: "text" },
