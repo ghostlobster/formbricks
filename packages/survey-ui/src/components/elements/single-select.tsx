@@ -338,6 +338,7 @@ function SingleSelect({
                 placeholder={otherOptionPlaceholder}
                 disabled={disabled}
                 required
+                aria-label={otherOptionLabel}
                 aria-invalid={Boolean(errorMessage)}
                 dir={dir}
                 className="mt-2 w-full"
@@ -395,6 +396,7 @@ function SingleSelect({
                       placeholder={otherOptionPlaceholder}
                       disabled={disabled}
                       required
+                      aria-label={otherOptionLabel}
                       aria-invalid={Boolean(errorMessage)}
                       dir={dir}
                       className="mt-2 w-full"

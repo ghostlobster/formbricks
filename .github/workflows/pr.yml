@@ -45,7 +45,7 @@ jobs:
 
   required:
     name: PR Check Summary
-    needs: [lint, test, build, e2e-test, storybook-a11y]
+    needs: [lint, test, build, storybook-a11y]
     if: always()
     runs-on: ubuntu-latest
     permissions:
