@@ -8,7 +8,7 @@ on:
       PLAYWRIGHT_SERVICE_ACCESS_TOKEN:
         required: false
       ENTERPRISE_LICENSE_KEY:
-        required: true
+        required: false
       # Add other secrets if necessary
   workflow_dispatch:
 
