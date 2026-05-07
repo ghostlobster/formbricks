@@ -96,12 +96,12 @@ function Matrix({
         <ElementError errorMessage={errorMessage} dir={dir} />
 
         {/* Table container with overflow for mobile */}
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto" tabIndex={0}>
           <table className="w-full border-collapse">
             {/* Column headers */}
             <thead>
               <tr>
-                <th className="p-2 text-start" />
+                <td className="p-2 text-start" />
                 {columns.map((column) => (
                   <th
                     key={column.id}
