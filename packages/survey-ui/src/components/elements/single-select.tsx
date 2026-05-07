@@ -256,7 +256,6 @@ function SingleSelect({
                   variant="outline"
                   disabled={disabled}
                   className="rounded-input min-h-input bg-input-bg border-input-border text-input-text py-input-y px-input-x w-full justify-between"
-                  aria-invalid={Boolean(errorMessage)}
                   aria-label={headline}>
                   <span className="font-input font-input-weight text-input-text truncate">{displayText}</span>
                   <ChevronDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
