@@ -13,12 +13,14 @@ const defaultProps = {
 describe("OpenText accessibility", () => {
   test("renders without char counter when no charLimit is set", () => {
     const { container } = render(<OpenText {...defaultProps} />);
-    expect(container.querySelector('[aria-live="polite"]')).toBeNull();
+    // ElementError always renders a div[aria-live], but the char counter is a span
+    expect(container.querySelector('span[aria-live="polite"]')).toBeNull();
   });
 
   test("char counter span has aria-live and aria-atomic when charLimit.max is set", () => {
     const { container } = render(<OpenText {...defaultProps} charLimit={{ max: 100 }} />);
-    const counter = container.querySelector('[aria-live="polite"]');
+    // Counter is a span; ElementError uses a div — target specifically
+    const counter = container.querySelector('span[aria-live="polite"]');
     expect(counter).not.toBeNull();
     expect(counter?.getAttribute("aria-atomic")).toBe("true");
     expect(counter?.id).toBe("opentext-input-counter");
