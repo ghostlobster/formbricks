@@ -369,12 +369,7 @@ function SingleSelect({
                       htmlFor={optionId}
                       className={cn(getOptionContainerClassName(isSelected), isSelected && "z-10")}>
                       <span className="flex items-center">
-                        <RadioGroupItem
-                          value={option.id}
-                          id={optionId}
-                          disabled={disabled}
-                          aria-required={required}
-                        />
+                        <RadioGroupItem value={option.id} id={optionId} disabled={disabled} />
                         <span className={cn("mx-3 grow", optionLabelClassName)}>{option.label}</span>
                       </span>
                     </label>
@@ -390,7 +385,6 @@ function SingleSelect({
                       value={otherOptionId}
                       id={`${inputId}-${otherOptionId}`}
                       disabled={disabled}
-                      aria-required={required}
                     />
                     <span className={cn("mr-3 ml-3 grow", optionLabelClassName)}>{otherOptionLabel}</span>
                   </span>
@@ -423,12 +417,7 @@ function SingleSelect({
                       dir={dir}
                       className={cn(getOptionContainerClassName(isSelected), isSelected && "z-10")}>
                       <span className="flex items-center">
-                        <RadioGroupItem
-                          value={option.id}
-                          id={optionId}
-                          disabled={disabled}
-                          aria-required={required}
-                        />
+                        <RadioGroupItem value={option.id} id={optionId} disabled={disabled} />
                         <span className={cn("mx-3 grow", optionLabelClassName)}>{option.label}</span>
                       </span>
                     </label>
