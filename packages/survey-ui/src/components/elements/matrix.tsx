@@ -96,7 +96,7 @@ function Matrix({
         <ElementError errorMessage={errorMessage} dir={dir} />
 
         {/* Table container with overflow for mobile */}
-        <div className="overflow-x-auto" tabIndex={0}>
+        <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             {/* Column headers */}
             <thead>
