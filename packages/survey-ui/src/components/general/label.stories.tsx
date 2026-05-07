@@ -183,7 +183,10 @@ export const Required: Story = {
   render: () => (
     <div className="space-y-2">
       <Label htmlFor="email">
-        Email address <span className="text-red-500">*</span>
+        Email address{" "}
+        <span className="text-red-500" aria-hidden="true">
+          *
+        </span>
       </Label>
       <Input id="email" type="email" placeholder="Enter your email..." required />
     </div>
@@ -217,7 +220,10 @@ export const ErrorState: Story = {
   render: () => (
     <div className="space-y-2">
       <Label htmlFor="invalid-email">
-        Email address <span className="text-red-500">*</span>
+        Email address{" "}
+        <span className="text-red-500" aria-hidden="true">
+          *
+        </span>
       </Label>
       <Input
         id="invalid-email"
@@ -257,7 +263,10 @@ export const FormSection: Story = {
         <div className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="contact-email">
-              Email address <span className="text-red-500">*</span>
+              Email address{" "}
+              <span className="text-red-500" aria-hidden="true">
+                *
+              </span>
             </Label>
             <Input id="contact-email" type="email" placeholder="Enter your email..." />
           </div>

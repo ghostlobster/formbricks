@@ -230,7 +230,10 @@ export const Required: Story = {
     <div className="space-y-4">
       <div>
         <h3 className="text-lg font-medium">
-          Gender <span className="text-red-500">*</span>
+          Gender{" "}
+          <span className="text-red-500" aria-hidden="true">
+            *
+          </span>
         </h3>
         <p className="text-muted-foreground text-sm">This field is required</p>
       </div>
