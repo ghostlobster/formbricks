@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { formatViolations, runAxe } from "@/lib/test-utils/a11y";
 import { Matrix } from "./matrix";
 
@@ -24,7 +24,7 @@ const defaultProps = {
 };
 
 describe("Matrix accessibility", () => {
-  it("column headers have id attributes for header association", () => {
+  test("column headers have id attributes for header association", () => {
     const { container } = render(<Matrix {...defaultProps} />);
     const colHeaders = container.querySelectorAll("thead th[id]");
     expect(colHeaders).toHaveLength(mockColumns.length);
@@ -33,7 +33,7 @@ describe("Matrix accessibility", () => {
     expect(colHeaders[2].id).toBe("matrix-input-col-col3");
   });
 
-  it("row headers have id attributes for header association", () => {
+  test("row headers have id attributes for header association", () => {
     const { container } = render(<Matrix {...defaultProps} />);
     const rowHeaders = container.querySelectorAll("th[scope='row'][id]");
     expect(rowHeaders).toHaveLength(mockRows.length);
@@ -41,7 +41,7 @@ describe("Matrix accessibility", () => {
     expect(rowHeaders[1].id).toBe("matrix-input-row-row2");
   });
 
-  it("data cells have headers attribute linking to row and column headers", () => {
+  test("data cells have headers attribute linking to row and column headers", () => {
     const { container } = render(<Matrix {...defaultProps} />);
     const dataCells = container.querySelectorAll("td[headers]");
     // 2 rows × 3 columns = 6 cells
@@ -50,20 +50,20 @@ describe("Matrix accessibility", () => {
     expect(firstCell.getAttribute("headers")).toBe("matrix-input-col-col1 matrix-input-row-row1");
   });
 
-  it("radio buttons use comma separator in aria-label for proper JAWS announcement", () => {
+  test("radio buttons use comma separator in aria-label for proper JAWS announcement", () => {
     const { container } = render(<Matrix {...defaultProps} />);
     const radioButtons = container.querySelectorAll('[role="radio"]');
     expect(radioButtons[0].getAttribute("aria-label")).toBe("Customer support, Poor");
     expect(radioButtons[0].getAttribute("aria-label")).not.toContain("-");
   });
 
-  it("has no axe violations", async () => {
+  test("has no axe violations", async () => {
     const { container } = render(<Matrix {...defaultProps} />);
     const violations = await runAxe(container);
     expect(violations, formatViolations(violations)).toHaveLength(0);
   });
 
-  it("has no axe violations when error is shown", async () => {
+  test("has no axe violations when error is shown", async () => {
     const { container } = render(<Matrix {...defaultProps} errorMessage="Please rate all rows" />);
     const violations = await runAxe(container);
     expect(violations, formatViolations(violations)).toHaveLength(0);

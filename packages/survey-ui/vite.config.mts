@@ -62,7 +62,7 @@ export default defineConfig({
     globals: true,
     include: ["src/**/*.test.ts", "src/**/*.a11y.test.tsx"],
     exclude: ["dist/**", "node_modules/**"],
-    environmentMatchGlobs: [["src/**/*.a11y.test.tsx", "happy-dom"]],
+    environmentMatchGlobs: [["**/*.a11y.test.tsx", "happy-dom"]],
     setupFiles: ["./vitestSetup.ts"],
     coverage: {
       provider: "v8",
