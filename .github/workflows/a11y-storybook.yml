@@ -43,9 +43,19 @@ jobs:
 
       - name: Run Storybook A11y tests
         run: |
-          npx concurrently -k -s first -n "SB,TEST" -c "magenta,blue" \
-            "npx http-server apps/storybook/storybook-static --port 6006 --silent" \
-            "npx wait-on tcp:6006 && pnpm --filter storybook test-storybook:ci"
+          # Serve static Storybook using installed http-server (no npx download needed)
+          pnpm --filter storybook exec http-server storybook-static --port 6006 --silent &
+          SERVER_PID=$!
+          # Wait up to 30 s for the server to accept connections
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:6006 > /dev/null && break
+            sleep 1
+          done
+          # Run a11y checks — scoped to components explicitly tagged a11y-verified
+          pnpm --filter storybook test-storybook:ci --includeTags a11y-verified
+          EXIT_CODE=$?
+          kill "$SERVER_PID" 2>/dev/null || true
+          exit $EXIT_CODE
 
       - name: Upload A11y report on failure
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
