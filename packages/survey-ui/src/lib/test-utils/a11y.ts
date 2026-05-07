@@ -15,7 +15,7 @@ export function formatViolations(violations: axe.Result[]): string {
   return violations
     .map(
       (v) =>
-        `[${v.impact}] ${v.id}: ${v.description}\n  Nodes: ${v.nodes
+        `[${v.impact ?? "unknown"}] ${v.id}: ${v.description}\n  Nodes: ${v.nodes
           .map((n) => n.html)
           .slice(0, 2)
           .join(", ")}`
