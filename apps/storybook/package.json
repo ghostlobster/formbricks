@@ -20,7 +20,7 @@
     "@storybook/addon-links": "10.3.5",
     "@storybook/addon-onboarding": "10.3.5",
     "@storybook/react-vite": "10.3.5",
-    "@storybook/test-runner": "0.22.0",
+    "@storybook/test-runner": "0.24.3",
     "@tailwindcss/vite": "4.2.4",
     "@typescript-eslint/eslint-plugin": "8.57.2",
     "@typescript-eslint/parser": "8.57.2",

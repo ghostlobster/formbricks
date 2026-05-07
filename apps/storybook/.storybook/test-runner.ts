@@ -1,18 +1,25 @@
-import { checkA11y, injectAxe } from "@axe-core/playwright";
+import { AxeBuilder } from "@axe-core/playwright";
 import type { TestRunnerConfig } from "@storybook/test-runner";
 
 const config: TestRunnerConfig = {
-  async preVisit(page) {
-    await injectAxe(page);
-  },
   async postVisit(page) {
-    await checkA11y(page, "#storybook-root", {
-      detailedReport: true,
-      detailedReportOptions: { html: true },
-      axeOptions: {
-        runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21aa"] },
-      },
-    });
+    const results = await new AxeBuilder({ page })
+      .include("#storybook-root")
+      .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+      .analyze();
+
+    if (results.violations.length > 0) {
+      const details = results.violations
+        .map(
+          (v) =>
+            `  [${v.impact ?? "unknown"}] ${v.id}: ${v.description}\n    Nodes: ${v.nodes
+              .slice(0, 2)
+              .map((n) => n.html)
+              .join(", ")}`
+        )
+        .join("\n");
+      throw new Error(`${String(results.violations.length)} accessibility violation(s):\n${details}`);
+    }
   },
 };
 
