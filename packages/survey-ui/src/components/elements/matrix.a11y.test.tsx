@@ -52,7 +52,7 @@ describe("Matrix accessibility", () => {
 
   test("radio buttons use comma separator in aria-label for proper JAWS announcement", () => {
     const { container } = render(<Matrix {...defaultProps} />);
-    const radioButtons = container.querySelectorAll('[role="radio"]');
+    const radioButtons = container.querySelectorAll('input[type="radio"]');
     expect(radioButtons[0].getAttribute("aria-label")).toBe("Customer support, Poor");
     expect(radioButtons[0].getAttribute("aria-label")).not.toContain("-");
   });

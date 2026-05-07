@@ -1,9 +1,7 @@
-import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
 import * as React from "react";
 import { ElementError } from "@/components/general/element-error";
 import { ElementHeader } from "@/components/general/element-header";
 import { Label } from "@/components/general/label";
-import { RadioGroupItem } from "@/components/general/radio-group";
 import { cn } from "@/lib/utils";
 
 /**
@@ -105,7 +103,10 @@ function Matrix({
               <tr>
                 <th className="p-2 text-start" />
                 {columns.map((column) => (
-                  <th key={column.id} id={`${inputId}-col-${column.id}`} className="p-2 text-center font-normal">
+                  <th
+                    key={column.id}
+                    id={`${inputId}-col-${column.id}`}
+                    className="p-2 text-center font-normal">
                     <Label className="justify-center">{column.label}</Label>
                   </th>
                 ))}
@@ -119,47 +120,63 @@ function Matrix({
                 const baseBgColor = index % 2 === 0 ? "bg-input-bg" : "bg-transparent";
 
                 return (
-                  <RadioGroupPrimitive.Root
-                    key={row.id}
-                    asChild
-                    value={selectedColumnId}
-                    onValueChange={(newColumnId) => {
-                      handleRowChange(row.id, newColumnId);
-                    }}
-                    name={rowGroupId}
-                    disabled={disabled}
-                    aria-required={required}
-                    aria-invalid={Boolean(errorMessage)}>
-                    <tr className={cn("relative", baseBgColor)} dir={dir}>
-                      {/* Row label */}
-                      <th scope="row" id={`${inputId}-row-${row.id}`} className={cn("rounded-s-input p-2 align-middle")}>
-                        <div className="flex flex-col gap-0 leading-none">
-                          <Label>{row.label}</Label>
-                        </div>
-                      </th>
-                      {/* Column options for this row */}
-                      {columns.map((column, colIndex) => {
-                        const cellId = `${rowGroupId}-${column.id}`;
-                        const isLastColumn = colIndex === columns.length - 1;
+                  <tr key={row.id} className={cn("relative", baseBgColor)} dir={dir}>
+                    {/* Row label */}
+                    <th
+                      scope="row"
+                      id={`${inputId}-row-${row.id}`}
+                      className={cn("rounded-s-input p-2 align-middle")}>
+                      <div className="flex flex-col gap-0 leading-none">
+                        <Label>{row.label}</Label>
+                      </div>
+                    </th>
+                    {/* Column options for this row */}
+                    {columns.map((column, colIndex) => {
+                      const cellId = `${rowGroupId}-${column.id}`;
+                      const isLastColumn = colIndex === columns.length - 1;
+                      const isChecked = selectedColumnId === column.id;
 
-                        return (
-                          <td
-                            key={column.id}
-                            headers={`${inputId}-col-${column.id} ${inputId}-row-${row.id}`}
-                            className={cn("p-2 text-center align-middle", isLastColumn && "rounded-e-input")}>
-                            <Label htmlFor={cellId} className="flex cursor-pointer justify-center">
-                              <RadioGroupItem
-                                value={column.id}
-                                id={cellId}
-                                disabled={disabled}
-                                aria-label={`${row.label}, ${column.label}`}
-                              />
-                            </Label>
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  </RadioGroupPrimitive.Root>
+                      return (
+                        <td
+                          key={column.id}
+                          headers={`${inputId}-col-${column.id} ${inputId}-row-${row.id}`}
+                          className={cn("p-2 text-center align-middle", isLastColumn && "rounded-e-input")}>
+                          <Label htmlFor={cellId} className="flex cursor-pointer justify-center">
+                            {/* sr-only native radio keeps table structure intact (no role="radiogroup" on <tr>) */}
+                            <input
+                              type="radio"
+                              id={cellId}
+                              name={rowGroupId}
+                              value={column.id}
+                              checked={isChecked}
+                              onChange={() => {
+                                if (!isChecked) handleRowChange(row.id, column.id);
+                              }}
+                              onClick={() => {
+                                if (isChecked) handleRowChange(row.id, column.id);
+                              }}
+                              disabled={disabled}
+                              aria-required={required}
+                              aria-invalid={Boolean(errorMessage)}
+                              aria-label={`${row.label}, ${column.label}`}
+                              className="peer sr-only"
+                            />
+                            {/* Visual radio indicator — mirrors RadioGroupItem styling */}
+                            <span
+                              aria-hidden="true"
+                              className={cn(
+                                "border-input-border flex aspect-square size-4 shrink-0 items-center justify-center rounded-full border bg-white shadow-xs transition-[color,box-shadow]",
+                                "peer-focus-visible:border-ring peer-focus-visible:ring-ring/50 peer-focus-visible:ring-[3px]",
+                                "peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+                                isChecked && "border-brand"
+                              )}>
+                              {isChecked ? <span className="bg-brand size-2 rounded-full" /> : null}
+                            </span>
+                          </Label>
+                        </td>
+                      );
+                    })}
+                  </tr>
                 );
               })}
             </tbody>
