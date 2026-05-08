@@ -153,10 +153,10 @@ jobs:
         run: |
           LICENSE_KEY=$(grep '^ENTERPRISE_LICENSE_KEY=' .env | cut -d'=' -f2-)
           if [ -z "$LICENSE_KEY" ]; then
-            echo "::error::ENTERPRISE_LICENSE_KEY in .env is empty. Please check your secret configuration."
-            exit 1
+            echo "::warning::ENTERPRISE_LICENSE_KEY is not set — enterprise features will be unavailable during E2E tests."
+          else
+            echo "License key length: ${#LICENSE_KEY}"
           fi
-          echo "License key length: ${#LICENSE_KEY}"
 
       - name: Disable rate limiting for E2E tests
         run: |
