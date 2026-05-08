@@ -16,5 +16,8 @@ export default defineConfig({
     "**/api/organization/team.spec.ts",
     "**/api/organization/project-team.spec.ts",
     "**/api/organization/user.spec.ts",
+    // Contacts API (modules/ee/contacts) checks getIsContactsEnabled() and returns
+    // 403 without enterprise license, failing expect(response.status()).toBe(201)
+    "**/api/management/contacts.spec.ts",
   ],
 });
