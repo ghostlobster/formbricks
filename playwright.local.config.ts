@@ -19,5 +19,13 @@ export default defineConfig({
     // Contacts API (modules/ee/contacts) checks getIsContactsEnabled() and returns
     // 403 without enterprise license, failing expect(response.status()).toBe(201)
     "**/api/management/contacts.spec.ts",
+    // Timing-attack test makes 220+ sequential bcrypt-backed auth requests and checks
+    // a 20% timing threshold — inherently flaky on shared CI runners; retries compound
+    // the cost to 5-10 minutes with no reliable signal.
+    "**/api/auth/security.spec.ts",
+    // Full JS SDK integration test: loads the UMD bundle into an inline HTTP server,
+    // fires a survey via "New Session" Page View action, and waits up to 2 min for the
+    // environment sync API.  Complex setup + 3 retry attempts = up to 9 min per shard.
+    "**/js.spec.ts",
   ],
 });
