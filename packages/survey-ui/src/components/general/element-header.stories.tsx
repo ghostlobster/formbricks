@@ -4,7 +4,7 @@ import { ElementHeader } from "./element-header";
 const meta: Meta<typeof ElementHeader> = {
   title: "UI-package/General/ElementHeader",
   component: ElementHeader,
-  tags: ["autodocs"],
+  tags: ["autodocs", "a11y-verified"],
   parameters: {
     layout: "centered",
   },

@@ -27,7 +27,7 @@ const meta: Meta<StoryProps> = {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "a11y-verified"],
   decorators: [createCSSVariablesDecorator<StoryProps>()],
   argTypes: {
     ...commonArgTypes,

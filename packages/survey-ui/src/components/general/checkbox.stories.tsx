@@ -14,7 +14,7 @@ const meta: Meta<typeof Checkbox> = {
       },
     },
   },
-  tags: ["autodocs"],
+  tags: ["autodocs", "a11y-verified"],
   argTypes: {
     checked: {
       control: { type: "boolean" },

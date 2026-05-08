@@ -159,7 +159,7 @@ function Calendar({
         table: "w-full border-collapse",
         weekdays: cn("flex", defaultClassNames.weekdays),
         weekday: cn(
-          "text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] select-none text-[var(--fb-input-color)] opacity-70",
+          "text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] select-none text-[var(--fb-input-color)]",
           defaultClassNames.weekday
         ),
         week: cn("flex w-full mt-2", defaultClassNames.week),
@@ -175,12 +175,9 @@ function Calendar({
         range_start: cn("rounded-l-md bg-accent", defaultClassNames.range_start),
         range_middle: cn("rounded-none", defaultClassNames.range_middle),
         range_end: cn("rounded-r-md bg-accent", defaultClassNames.range_end),
-        today: cn(
-          "bg-accent text-brand-foreground rounded-md data-[selected=true]:rounded-none bg-brand opacity-50",
-          defaultClassNames.today
-        ),
+        today: cn("bg-accent rounded-md data-[selected=true]:rounded-none", defaultClassNames.today),
         outside: cn(
-          "text-[var(--fb-input-color)] opacity-70 aria-selected:text-[var(--fb-input-color)] opacity-70",
+          "text-[var(--fb-input-color)] aria-selected:text-[var(--fb-input-color)]",
           defaultClassNames.outside
         ),
         disabled: cn("text-muted-foreground opacity-50", defaultClassNames.disabled),

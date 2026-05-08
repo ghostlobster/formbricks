@@ -194,20 +194,20 @@ function UploadArea({
           id={`${inputId}-label`}>
           {placeholderText}
         </span>
-        <input
-          ref={fileInputRef}
-          type="file"
-          id={inputId}
-          className="sr-only"
-          multiple={allowMultiple}
-          accept={acceptAttribute}
-          onChange={onFileChange}
-          disabled={disabled}
-          dir={dir}
-          aria-label="File upload"
-          aria-describedby={`${inputId}-label`}
-        />
       </button>
+      <input
+        ref={fileInputRef}
+        type="file"
+        id={inputId}
+        className="sr-only"
+        multiple={allowMultiple}
+        accept={acceptAttribute}
+        onChange={onFileChange}
+        disabled={disabled}
+        dir={dir}
+        aria-label="File upload"
+        aria-describedby={`${inputId}-label`}
+      />
     </label>
   );
 }
@@ -299,7 +299,7 @@ function FileUpload({
           className={cn(
             "w-input px-input-x py-input-y rounded-input bg-accent relative flex flex-col items-center justify-center border-2 border-dashed transition-colors",
             errorMessage ? "border-destructive" : "border-input-border",
-            disabled && "cursor-not-allowed opacity-50"
+            disabled && "cursor-not-allowed"
           )}>
           <UploadedFilesList files={uploadedFiles} disabled={disabled} onDelete={handleDeleteFile} />
 

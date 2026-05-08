@@ -16,7 +16,7 @@ type StoryProps = ProgressProps & Partial<StylingOptions> & Record<string, unkno
 const meta: Meta<StoryProps> = {
   title: "UI-package/General/Progress",
   component: Progress,
-  tags: ["autodocs"],
+  tags: ["autodocs", "a11y-verified"],
   parameters: {
     layout: "centered",
   },
@@ -64,6 +64,7 @@ export const Default: Story = {
   ),
   args: {
     value: 50,
+    "aria-label": "Survey progress",
   },
 };
 
@@ -75,6 +76,7 @@ export const Zero: Story = {
   ),
   args: {
     value: 0,
+    "aria-label": "Survey progress",
   },
 };
 
@@ -86,6 +88,7 @@ export const Half: Story = {
   ),
   args: {
     value: 50,
+    "aria-label": "Survey progress",
   },
 };
 
@@ -97,6 +100,7 @@ export const Complete: Story = {
   ),
   args: {
     value: 100,
+    "aria-label": "Survey progress",
   },
 };
 
@@ -108,6 +112,7 @@ export const CustomStyles: Story = {
   ),
   args: {
     value: 75,
+    "aria-label": "Survey progress",
     trackHeight: "1.25rem",
     trackBgColor: "hsl(0 0% 0% / 0.3)",
     trackBorderRadius: "0.75rem",
