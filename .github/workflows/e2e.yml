@@ -3,10 +3,6 @@ name: E2E Tests
 on:
   workflow_call:
     secrets:
-      PLAYWRIGHT_SERVICE_URL:
-        required: false
-      PLAYWRIGHT_SERVICE_ACCESS_TOKEN:
-        required: false
       ENTERPRISE_LICENSE_KEY:
         required: false
       # Add other secrets if necessary
@@ -22,9 +18,13 @@ permissions:
 
 jobs:
   build:
-    name: Run E2E Tests
+    name: Run E2E Tests (${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    strategy:
+      matrix:
+        shard: [1, 2, 3, 4]
+      fail-fast: false
     services:
       postgres:
         image: pgvector/pgvector@sha256:9ae02a756ba16a2d69dd78058e25915e36e189bb36ddf01ceae86390d7ed786a
@@ -138,12 +138,14 @@ jobs:
           pnpm db:migrate:dev
 
       - name: Run Rate Limiter Load Tests
+        if: matrix.shard == 1
         run: |
           echo "Running rate limiter load tests with Redis/Valkey..."
           cd apps/web && pnpm vitest run modules/core/rate-limit/rate-limit-load.test.ts
         shell: bash
 
       - name: Run Cache Integration Tests
+        if: matrix.shard == 1
         run: |
           echo "Running cache integration tests with Redis/Valkey..."
           cd packages/cache && pnpm vitest run src/cache-integration.test.ts
@@ -166,9 +168,8 @@ jobs:
 
       - name: Run App
         run: |
-          echo "Starting app with enterprise license..."
           NODE_ENV=test pnpm start --filter=@formbricks/web | tee app.log 2>&1 &
-          sleep 10  # Optional: gives some buffer for the app to start
+          sleep 10
           for attempt in {1..10}; do
             if [ $(curl -o /dev/null -s -w "%{http_code}" http://localhost:3000/health) -eq 200 ]; then
               echo "Application is ready."
@@ -185,52 +186,22 @@ jobs:
       - name: Install Playwright
         run: pnpm exec playwright install --with-deps
 
-      - name: Determine Playwright execution mode
-        shell: bash
-        env:
-          PLAYWRIGHT_SERVICE_URL: ${{ secrets.PLAYWRIGHT_SERVICE_URL }}
-          PLAYWRIGHT_SERVICE_ACCESS_TOKEN: ${{ secrets.PLAYWRIGHT_SERVICE_ACCESS_TOKEN }}
-        run: |
-          set -euo pipefail
-
-          if [[ -n "${PLAYWRIGHT_SERVICE_URL}" && -n "${PLAYWRIGHT_SERVICE_ACCESS_TOKEN}" ]]; then
-            echo "PW_MODE=service" >> "$GITHUB_ENV"
-          else
-            echo "PW_MODE=local" >> "$GITHUB_ENV"
-          fi
-
-      - name: Run E2E Tests (Playwright Service)
-        if: env.PW_MODE == 'service'
-        env:
-          PLAYWRIGHT_SERVICE_URL: ${{ secrets.PLAYWRIGHT_SERVICE_URL }}
-          PLAYWRIGHT_SERVICE_ACCESS_TOKEN: ${{ secrets.PLAYWRIGHT_SERVICE_ACCESS_TOKEN }}
-          CI: true
-        run: pnpm test-e2e:azure
-
-      - name: Run E2E Tests (Local)
-        if: env.PW_MODE == 'local'
+      - name: Run E2E Tests
         env:
           CI: true
-        run: |
-          pnpm test:e2e -c playwright.local.config.ts
-
-      - name: Run Accessibility E2E Tests (Local)
-        if: env.PW_MODE == 'local'
-        env:
-          CI: true
-        run: pnpm test:e2e -c playwright.local.config.ts -- apps/web/playwright/a11y.spec.ts
+        run: pnpm test:e2e -c playwright.local.config.ts --shard=${{ matrix.shard }}/4
 
       - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.shard }}
           path: playwright-report/
           retention-days: 30
 
       - uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
         if: failure()
         with:
-          name: app-logs
+          name: app-logs-${{ matrix.shard }}
           if-no-files-found: ignore
           path: app.log
 
