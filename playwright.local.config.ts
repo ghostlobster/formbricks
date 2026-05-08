@@ -2,7 +2,8 @@ import { defineConfig } from "@playwright/test";
 import config from "./playwright.config";
 
 // Extends the base config for local runs (no enterprise license, no Azure Playwright service).
-// Skips spec files that require an enterprise license to render their target UI.
+// Skips spec files that require an enterprise license to render their target UI or call
+// enterprise-gated API endpoints.
 export default defineConfig({
   ...config,
   testIgnore: [
@@ -10,5 +11,10 @@ export default defineConfig({
     "**/survey-follow-up.spec.ts",
     // Team CRUD tests live behind the modules/ee/teams enterprise gate
     "**/organization.spec.ts",
+    // These API specs all call the Teams API (modules/ee/teams) which returns a
+    // non-ok response without an enterprise license, failing expect(response.ok()).toBe(true)
+    "**/api/organization/team.spec.ts",
+    "**/api/organization/project-team.spec.ts",
+    "**/api/organization/user.spec.ts",
   ],
 });
