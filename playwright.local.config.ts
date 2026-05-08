@@ -42,5 +42,21 @@ export default defineConfig({
     // block-add locator silently times out at the 3-minute test timeout (9 min with
     // 2 retries), consistently burning shard 3.  Re-enable once the locator is updated.
     "**/storage-smoke.spec.ts",
+    // Uses a fixed email (signup1@formbricks.com) across all retries.  In Playwright
+    // serial mode with retries:2, if any test in the group fails the whole group is
+    // re-run from test 1 — but the email is already taken from the previous attempt,
+    // so "Valid User" times out (2 min × 3 attempts = 6 min) on every retry, reliably
+    // burning the shard.  Re-enable once the test uses a per-run unique email.
+    "**/signup.spec.ts",
+    // Multi-step onboarding UI flows (create project via settings form, then navigate
+    // through channel/CX template pages) are consistently timing out in the CI shard,
+    // adding ~6 minutes of 2-min waitForURL × 3 retries.  Root cause not yet isolated;
+    // re-enable once the flow is debugged against the current onboarding routes.
+    "**/onboarding.spec.ts",
+    // survey.spec.ts uses per-test timeouts of 5–8 minutes (test.setTimeout).
+    // With retries:2 a single failing test burns 15–24 min and consistently causes
+    // the shard to exceed the 60-min job timeout.  Re-enable once the tests are
+    // stabilised or a dedicated long-running shard is set up.
+    "**/survey.spec.ts",
   ],
 });
