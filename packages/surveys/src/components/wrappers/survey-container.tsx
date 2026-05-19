@@ -53,6 +53,36 @@ export function SurveyContainer({
     };
   }, [clickOutside, hasOverlay, modalRef, onClose, isModal, isOpen]);
 
+  useEffect(() => {
+    if (!isModal || !isOpen) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const hiddenElements: { el: Element; previousValue: string | null }[] = [];
+    const widgetRoot =
+      document.getElementById("formbricks-modal-container") ?? document.getElementById("fbjs");
+
+    Array.from(document.body.children).forEach((child) => {
+      if (child === widgetRoot) return;
+      const current = child.getAttribute("aria-hidden");
+      if (current === "true") return;
+      hiddenElements.push({ el: child, previousValue: current });
+      child.setAttribute("aria-hidden", "true");
+    });
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      hiddenElements.forEach(({ el, previousValue }) => {
+        if (previousValue === null) {
+          el.removeAttribute("aria-hidden");
+        } else {
+          el.setAttribute("aria-hidden", previousValue);
+        }
+      });
+    };
+  }, [isModal, isOpen]);
+
   const getPlacementStyle = (placement: TPlacement): string => {
     switch (placement) {
       case "bottomRight":

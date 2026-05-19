@@ -98,6 +98,7 @@ function Matrix({
         {/* Table container with overflow for mobile */}
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
+            <caption className="sr-only">{headline}</caption>
             {/* Column headers */}
             <thead>
               <tr>

@@ -5,11 +5,13 @@ import { cn } from "@/lib/utils";
 interface ElementErrorProps {
   /** Error message to display */
   errorMessage?: string;
+  /** Optional id for the live region, enabling aria-describedby association from form inputs */
+  id?: string;
   /** Text direction: 'ltr' (left-to-right), 'rtl' (right-to-left), or 'auto' (auto-detect from content) */
   dir?: "ltr" | "rtl" | "auto";
 }
 
-function ElementError({ errorMessage, dir = "auto" }: Readonly<ElementErrorProps>): React.JSX.Element {
+function ElementError({ errorMessage, id, dir = "auto" }: Readonly<ElementErrorProps>): React.JSX.Element {
   return (
     <>
       {/* Error indicator bar - decorative, hidden from screen readers */}
@@ -31,6 +33,7 @@ function ElementError({ errorMessage, dir = "auto" }: Readonly<ElementErrorProps
         role="status"
         aria-live="polite"
         aria-atomic="true"
+        id={id}
         dir={dir}
         className={errorMessage ? "text-destructive mb-2 flex items-center gap-1 text-sm" : "sr-only"}>
         {errorMessage ? (

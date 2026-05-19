@@ -164,6 +164,8 @@ function Ranking({
   imageUrl,
   videoUrl,
 }: Readonly<RankingProps>): React.JSX.Element {
+  const errorId = errorMessage ? `${inputId}-error` : undefined;
+
   // Ensure value is always an array
   const rankedIds = React.useMemo(() => (Array.isArray(value) ? value : []), [value]);
 
@@ -224,8 +226,8 @@ function Ranking({
 
       {/* Ranking Options */}
       <div className="relative" data-element-input>
-        <ElementError errorMessage={errorMessage} dir={dir} />
-        <fieldset className="w-full" dir={dir}>
+        <ElementError errorMessage={errorMessage} id={errorId} dir={dir} />
+        <fieldset className="w-full" dir={dir} aria-describedby={errorId}>
           <legend className="sr-only">Ranking options</legend>
           <div className="space-y-2" ref={parent as React.Ref<HTMLDivElement>}>
             {allItems.map((item) => (

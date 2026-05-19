@@ -54,6 +54,8 @@ function Consent({
   imageUrl,
   videoUrl,
 }: Readonly<ConsentProps>): React.JSX.Element {
+  const errorId = errorMessage ? `${inputId}-error` : undefined;
+
   const handleCheckboxChange = (checked: boolean): void => {
     if (disabled) return;
     onChange(checked);
@@ -74,7 +76,7 @@ function Consent({
 
       {/* Consent Checkbox */}
       <div className="relative" data-element-input>
-        <ElementError errorMessage={errorMessage} dir={dir} />
+        <ElementError errorMessage={errorMessage} id={errorId} dir={dir} />
 
         <label
           htmlFor={`${inputId}-checkbox`}
@@ -91,6 +93,7 @@ function Consent({
             onCheckedChange={handleCheckboxChange}
             disabled={disabled}
             aria-invalid={Boolean(errorMessage)}
+            aria-describedby={errorId}
           />
           {/* need to use style here because tailwind is not able to use css variables for font size and weight */}
           <span

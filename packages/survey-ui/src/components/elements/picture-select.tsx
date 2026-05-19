@@ -68,6 +68,8 @@ function PictureSelect({
   imageUrl,
   videoUrl,
 }: Readonly<PictureSelectProps>): React.JSX.Element {
+  const errorId = errorMessage ? `${inputId}-error` : undefined;
+
   // Ensure value is always the correct type
   let selectedValues: string[] | string | undefined;
   if (allowMulti) {
@@ -107,7 +109,7 @@ function PictureSelect({
 
       {/* Picture Grid - 2 columns */}
       <div className="relative" data-element-input>
-        <ElementError errorMessage={errorMessage} dir={dir} />
+        <ElementError errorMessage={errorMessage} id={errorId} dir={dir} />
         {allowMulti ? (
           <div className="grid grid-cols-2 gap-2">
             {options.map((option) => {
