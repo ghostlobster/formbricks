@@ -97,7 +97,8 @@ function CTA({
               variant={buttonVariant}
               size="custom">
               {buttonLabel}
-              <SquareArrowOutUpRightIcon className="size-4" />
+              <span className="sr-only">, opens in new tab</span>
+              <SquareArrowOutUpRightIcon className="size-4" aria-hidden="true" />
             </Button>
           </div>
         ) : null}

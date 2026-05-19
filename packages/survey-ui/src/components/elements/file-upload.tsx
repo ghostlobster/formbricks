@@ -148,6 +148,7 @@ interface UploadAreaProps {
   onDragOver: (e: React.DragEvent<HTMLLabelElement>) => void;
   onDrop: (e: React.DragEvent<HTMLLabelElement>) => void;
   showUploader: boolean;
+  errorId?: string;
 }
 
 function UploadArea({
@@ -162,6 +163,7 @@ function UploadArea({
   onDragOver,
   onDrop,
   showUploader,
+  errorId,
 }: Readonly<UploadAreaProps>): React.JSX.Element | null {
   if (!showUploader) {
     return null;
@@ -206,7 +208,7 @@ function UploadArea({
         disabled={disabled}
         dir={dir}
         aria-label="File upload"
-        aria-describedby={`${inputId}-label`}
+        aria-describedby={[`${inputId}-label`, errorId].filter(Boolean).join(" ")}
       />
     </label>
   );
@@ -235,6 +237,8 @@ function FileUpload({
   uploadingText = "Uploading...",
 }: Readonly<FileUploadProps>): React.JSX.Element {
   const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const errorId = errorMessage ? `${inputId}-error` : undefined;
 
   // Ensure value is always an array
   const uploadedFiles = Array.isArray(value) ? value : [];
@@ -293,7 +297,7 @@ function FileUpload({
       />
 
       <div className="relative" data-element-input>
-        <ElementError errorMessage={errorMessage} dir={dir} />
+        <ElementError errorMessage={errorMessage} id={errorId} dir={dir} />
 
         <div
           className={cn(
@@ -326,6 +330,7 @@ function FileUpload({
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               showUploader={showUploader}
+              errorId={errorId}
             />
           </div>
         </div>
